@@ -28,7 +28,7 @@ void get_targetmac(u_int8_t* mac) {
   char* address[6];
   int i = 0;
 
-  system("sudo arp -a 192.168.80.2 | cut -f 4 -d \" \" > mac.txt ");
+  system("sudo arp -a 192.168.80.129 | cut -f 4 -d \" \" > mac.txt ");
 
   FILE *fp = fopen("mac.txt", "r");
 	fgets(buffer, sizeof(buffer), fp);
@@ -105,8 +105,8 @@ void make_ether(struct ether_header* ether, uint8_t* hwaddr, uint8_t* target_mac
   uint16_t type = 0x0806;
 
   // COPY to ether struct
-  memcpy(ether->ether_dhost, hwaddr, sizeof(hwaddr));
-  memcpy(ether->ether_shost, target_mac, sizeof(target_mac));
+  memcpy(ether->ether_dhost, target_mac, sizeof(target_mac));
+  memcpy(ether->ether_shost, hwaddr, sizeof(hwaddr));
   ether->ether_type = htons(type);
 
   // Print
